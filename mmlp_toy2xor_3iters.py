@@ -5,6 +5,7 @@
 
 Toy 2 : XOR
   
+  (No power of w : just w)
   
 
 Author: Nathan E. Frick
