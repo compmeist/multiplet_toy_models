@@ -13,7 +13,9 @@ Author: Nathan E. Frick
 in the multiplet neural network
  backprop
 
-*** variable b and variable m within each multiplet, with w to the L power! ***
+***  static b ( 1.0 for neg p) variable m within each multiplet, with w to the L power! ***
+
+   works - as long as last layer is p=1
 
 """
 
@@ -28,9 +30,9 @@ in the multiplet neural network
 
 
 
-b_alpha = 0.2
+b_alpha = 0.0
 m_alpha = 0.2
-m_alpha2 = 0.4
+m_alpha2 = 0.2
 w_alpha= 0.2
 guseCaseSlope = 0
 
@@ -418,12 +420,12 @@ for l in range(1,2):
     i = 0
     #netLyr[l].mn.append(multiplet_neuron(netLyr[l].wtgrp[i],-3,1,np.random.laplace(0.5,0.3),0.0)) # "minimum-ish" ( error results with -4 or -5 - don't use)
     netLyr[l].mn.append(multiplet_neuron(netLyr[l].wtgrp[i],1,1,np.random.laplace(0.5,0.3),0.0))  # "dot product"
-    netLyr[l].mn.append(multiplet_neuron(netLyr[l].wtgrp[i],5,1,1,0.0)) # "max-ish"
+    netLyr[l].mn.append(multiplet_neuron(netLyr[l].wtgrp[i],5,1,np.random.laplace(0.5,0.3),0.0)) # "max-ish"
 
     #netLyr[l].wtgrp.append(multiplet_weight_vec(np.ones((vecSize,))))  
     #i = i + 1
     # b = 1.0
-    netLyr[l].mn.append(multiplet_neuron(netLyr[l].wtgrp[i],-3,1,(-1*1),0.0)) # "minimum-ish" ( error results with -4 or -5 - don't use)
+    netLyr[l].mn.append(multiplet_neuron(netLyr[l].wtgrp[i],-3,1,(-1*np.random.laplace(0.5,0.3)),1.0)) # "minimum-ish" ( error results with -4 or -5 - don't use)
     #netLyr[l].mn.append(multiplet_neuron(netLyr[l].wtgrp[i],1,1,(-1*np.random.laplace(0.5,0.3)),1.0))  # "dot product"
     #netLyr[l].mn.append(multiplet_neuron(netLyr[l].wtgrp[i],5,1,(-1*np.random.laplace(0.5,0.3)),1.0)) # "max-ish"
  # weight group for q=2
@@ -453,7 +455,7 @@ for l in range(2,3):
     # now attach neurons associated with these w groups
     i = 0
     # netLyr[l].mn.append(multiplet_neuron(netLyr[l].wtgrp[i],-3,1,(-1*np.random.laplace(0.5,0.3)),1.0))  # b 1 
-    netLyr[l].mn.append(multiplet_neuron(netLyr[l].wtgrp[i],-3,1,np.random.laplace(0.5,0.3),0.0))  
+    netLyr[l].mn.append(multiplet_neuron(netLyr[l].wtgrp[i],1,1,np.random.laplace(0.5,0.3),0.0))  
 
 
 """
@@ -472,7 +474,7 @@ for l in range(2,3):
 
 
 
-for k in range(300):
+for k in range(30):
     # epochNetworkInit()
     for ii in range(len(xAryIn)):
 
@@ -502,56 +504,5 @@ for ii in range(len(xAryIn)):
     print(netLyr[l].vecOutI)
 
 """
- In only 3 iterations:  
-+++++++++++++++++++++++++ post training +++++
-------- layer ------  1  --------
-neuron 0 aout=1.12 on p=5 b=0.00 m=1.13
-      w= [1. 1.]
-neuron 1 aout=0.01 on p=-3 b=1.00 m=-1.00
-      w= [1. 1.]
-------- layer ------  2  --------
-neuron 0 aout=0.99 on p=-3 b=1.00 m=-0.95
-      w= [1. 1.]
-neuron 1 aout=0.01 on p=-3 b=0.00 m=0.94
-      w= [1. 1.]
-output from input vector  [0.99, 0.99]  is
-[0.994 0.006]
-------- layer ------  1  --------
-neuron 0 aout=0.01 on p=5 b=0.00 m=1.13
-      w= [1. 1.]
-neuron 1 aout=0.99 on p=-3 b=1.00 m=-1.00
-      w= [1. 1.]
-------- layer ------  2  --------
-neuron 0 aout=0.99 on p=-3 b=1.00 m=-0.95
-      w= [1. 1.]
-neuron 1 aout=0.01 on p=-3 b=0.00 m=0.94
-      w= [1. 1.]
-output from input vector  [0.01, 0.01]  is
-[0.989 0.011]
-------- layer ------  1  --------
-neuron 0 aout=1.12 on p=5 b=0.00 m=1.13
-      w= [1. 1.]
-neuron 1 aout=0.99 on p=-3 b=1.00 m=-1.00
-      w= [1. 1.]
-------- layer ------  2  --------
-neuron 0 aout=0.02 on p=-3 b=1.00 m=-0.95
-      w= [1. 1.]
-neuron 1 aout=0.97 on p=-3 b=0.00 m=0.94
-      w= [1. 1.]
-output from input vector  [0.99, 0.01]  is
-[0.018 0.974]
-------- layer ------  1  --------
-neuron 0 aout=1.12 on p=5 b=0.00 m=1.13
-      w= [1. 1.]
-neuron 1 aout=0.99 on p=-3 b=1.00 m=-1.00
-      w= [1. 1.]
-------- layer ------  2  --------
-neuron 0 aout=0.02 on p=-3 b=1.00 m=-0.95
-      w= [1. 1.]
-neuron 1 aout=0.97 on p=-3 b=0.00 m=0.94
-      w= [1. 1.]
-output from input vector  [0.01, 0.99]  is
-[0.018 0.974]
-
 
 """   
