@@ -3,7 +3,7 @@
 
 """
 
-approach where f(f(w,x),m)  and ddw is x_i
+approach where f(f(w,x),m) 
 
 normalizing of the w_i
   
