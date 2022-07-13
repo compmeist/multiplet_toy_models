@@ -5,7 +5,7 @@
 
 Toy 2 : XOR
   
-  (No power of w : just w)
+  (No power of w : just w - as in the paper)
   
 
 Author: Nathan E. Frick
